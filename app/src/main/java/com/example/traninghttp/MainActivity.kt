@@ -13,6 +13,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        GlobalScope.launch {
+            val list = getAll()
+        }
+    }
+    suspend fun getAll():List<WeatherEntity>{
+        LaunchActivity.db = WeatherDatabase.getDatabase(applicationContext)
+        val dao = LaunchActivity.db.weatherDao()
+        val list = dao.getAll()
+        return list
     }
 }
 
